@@ -68,7 +68,7 @@
 .track-title { font-size: 13px; font-weight: 500; }
 .track-subtitle { margin-top: 5px; font-size: 11px; color: var(--color-muted); }
 .transport-buttons { display: flex; align-items: center; justify-content: center; gap: 12px; }
-.play-button { background: var(--color-raised); }
+.play-button { background: var(--color-raised); color: var(--color-foreground); }
 .progress { display: flex; align-items: center; gap: 8px; color: var(--color-muted); font-size: 10px; }
 .player-end { display: flex; align-items: center; justify-content: flex-end; gap: 16px; font-size: 11px; color: var(--color-muted); }
 .is-collapsed { grid-template-columns: 72px minmax(0, 1fr); }
@@ -181,7 +181,7 @@
 .queue-track > span:last-child { font-size: 11px; font-variant-numeric: tabular-nums; flex-shrink: 0; }
 .queue-empty { color: var(--color-muted); font-size: 13px; }
 
-.expanded-controls .play-button { width: 56px; height: 56px; color: var(--color-foreground); }
+.expanded-controls .play-button { width: 56px; height: 56px; }
 .expanded-controls .play-button svg { width: 26px; height: 26px; }
 .expanded-controls .skip:enabled { color: var(--color-foreground); }
 .album-art img { width: 100%; height: 100%; object-fit: cover; display: block; }
