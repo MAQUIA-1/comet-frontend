@@ -26,7 +26,7 @@ HDMI-I2S는 하드웨어 배경 정보다. 표준 Linux 오디오 인터페이�
 
 ## 현재 구현 상태
 
-App Shell, 4개 탐색 메뉴, 공통 확장 Now Playing, 재생 Mock 조작과 Up next를 구현했다. Library·Playlists·Signal Chain·Device Information·Settings는 진입 가능한 플레이스홀더다. 아래 기능표는 제품 방향이며 모든 기능이 구현됐다는 뜻은 아니다.
+App Shell, 4개 탐색 메뉴, 공통 확장 Now Playing, 재생 Mock 조작과 Up next를 구현했다. Library는 Albums·Artists·Tracks·Folders 탐색과 앨범 상세·곡 선택을 Mock으로 제공한다. Playlists·Signal Chain·Device Information·Settings는 플레이스홀더다. Library 검색은 현재 섹션의 Mock 항목을 대상으로 하며 정렬·고급 필터는 아직 구현하지 않았다. 폴더는 가상의 계층이다. 아래 기능표는 제품 방향이며 모든 기능이 구현됐다는 뜻은 아니다.
 
 ## 핵심 기능과 화면 범위
 

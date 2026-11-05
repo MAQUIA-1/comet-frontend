@@ -8,6 +8,7 @@ export const en = {
   player: { label: 'Player', open: 'Open Now Playing', empty: 'Nothing playing', waiting: 'Waiting for music', previous: 'Previous track', play: 'Play', next: 'Next track', noSource: 'No input source', pause: 'Pause', seek: 'Playback position' },
   placeholder: { title: 'A space for what comes next', description: 'This page will take shape in the next stage.' },
   queue: { next: 'Up next', empty: 'No more tracks in the queue.', unavailable: 'Queue is not available in this preview scenario.' },
+  library: { albums: 'Albums', artists: 'Artists', tracks: 'Tracks', folders: 'Folders', search: 'Search library', noResults: 'No matching results.', clearSearch: 'Clear search', closeSearch: 'Close search', folderRoot: 'Music', folderBack: 'Back to folders', views: 'Library views', backTo: 'Back to', back: 'Back to library', backArtists: 'Back to artists', songs: 'tracks', playAlbum: 'Play album', album: 'Album',  playTrack: 'Play' },
   development: { title: 'Dev tools' },
   playback: { local: 'Local / NAS', spotify: 'Spotify Connect', airplay: 'AirPlay', bluetooth: 'Bluetooth', empty: 'No input', preview: 'Preview scenario', mockOnly: 'UI simulation · no audio', noMetadata: 'Metadata unavailable', externalSelection: 'Select music on your connected device.', idle: 'Idle', playing: 'Playing', paused: 'Paused', source: 'Input source', format: 'Source format', unavailable: 'Not provided in this scenario',  },
 }

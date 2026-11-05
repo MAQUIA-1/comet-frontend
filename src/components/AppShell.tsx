@@ -7,6 +7,7 @@ import { useMessages } from '../i18n'
 import { useState } from 'react'
 import { Library, ListMusic, Workflow, Settings, Server, ChevronRight } from 'lucide-react'
 import { PageHeader } from './PageHeader'
+import { LibraryPage } from '../pages/LibraryPage'
 import { PrototypePage } from '../pages/PrototypePage'
 
 const pages = [
@@ -45,7 +46,7 @@ export function AppShell() {
         <PageHeader title={text.pages[active]} collapsed={collapsed} onToggleSidebar={() => setCollapsed(value => !value)} />
         <div className="page-scroll" key={active} tabIndex={0} role="region" aria-label={text.pages[active]}><>
           {active === 'settings' && <button className="mobile-device-link nav-item" onClick={() => navigate('device')}><Server size={20} /><span>{text.pages.device}</span><ChevronRight size={18} /></button>}
-          <PrototypePage />
+          {active === 'library' ? <LibraryPage playback={playback} /> : <PrototypePage />}
         </></div>
       </div>
     </main>

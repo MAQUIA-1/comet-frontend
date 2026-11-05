@@ -1,11 +1,8 @@
 import { useState } from 'react'
 
-// Fictional metadata and UI-only capabilities; not a service contract.
-export const tracks = [
-  { title: 'Between the Tides', artist: 'Northbound', album: 'Quiet Coordinates', duration: 248, art: 'tides' },
-  { title: 'Soft Geometry', artist: 'Aster Fields', album: 'Rooms of Light', duration: 216, art: 'geometry' },
-  { title: 'After the Rain', artist: 'Northbound', album: 'Quiet Coordinates', duration: 302, art: 'rain' },
-]
+import { tracks } from './library'
+export { tracks } from './library'
+
 export const scenarios = ['local', 'spotify', 'airplay', 'bluetooth', 'empty'] as const
 export type Scenario = typeof scenarios[number]
 export function useMockPlayback() {
@@ -19,6 +16,7 @@ export function useMockPlayback() {
   const selectTrack = (next: number) => { setIndex((next + tracks.length) % tracks.length); setPosition(0) }
   return { scenario, track, index, playing, position, canControl, canSeek,
     setPosition, selectTrack,
+    playTrack: (next: number) => { setScenario('local'); setIndex(next); setPosition(0); setPlaying(true) },
     toggle: () => { if (canControl) setPlaying(value => !value) },
     changeScenario: (value: Scenario) => { setScenario(value); setPlaying(value !== 'empty' && value !== 'local'); setPosition(0) },
   }

@@ -11,6 +11,11 @@ const viewports = [
 ]
 const scenarios = [
   { name: 'Library', expanded: false, empty: false },
+  { name: 'Library / Search', expanded: false, empty: false, library: 'search', mobileOnly: true },
+  { name: 'Library / Album', expanded: false, empty: false, library: 'album' },
+  { name: 'Library / Artists', expanded: false, empty: false, library: 'artists' },
+  { name: 'Library / Folders', expanded: false, empty: false, library: 'folders' },
+  { name: 'Library / Tracks', expanded: false, empty: false, library: 'tracks' },
   { name: 'Now Playing', expanded: true, empty: false },
   { name: 'Now Playing / Up next', expanded: true, empty: false, mobileOnly: true, scrollToQueue: true },
   { name: 'Empty', expanded: true, empty: true },
@@ -34,6 +39,11 @@ try {
       page.on('pageerror', error => errors.push(error.message))
       await page.goto(url, { waitUntil: 'networkidle' })
       await page.evaluate(() => document.fonts.ready)
+      if (scenario.library === 'search') { await page.getByRole('button', { name: 'Search library' }).click(); await page.getByRole('searchbox', { name: 'Search library' }).fill('quiet') }
+      if (scenario.library === 'album') await page.getByRole('button', { name: 'Quiet Coordinates Northbound' }).click()
+      if (scenario.library === 'artists') await page.getByRole('button', { name: 'Artists', exact: true }).click()
+      if (scenario.library === 'folders') await page.getByRole('button', { name: 'Folders', exact: true }).click()
+      if (scenario.library === 'tracks') await page.getByRole('button', { name: 'Tracks', exact: true }).click()
       if (scenario.empty) {
         await page.locator('.dev-tools summary').click()
         await page.locator('#dev-scenario').selectOption('empty')
