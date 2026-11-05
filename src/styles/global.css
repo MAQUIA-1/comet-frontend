@@ -94,6 +94,6 @@
   .artwork { width: 42px; height: 42px; }
   .transport .skip, .progress, .player-end { display: none; }
   .transport-buttons { gap: 0; }
-  .mobile-nav { display: flex; justify-content: space-around; padding: 6px 2px; }
+  .mobile-nav { display: flex; gap: var(--spacing-gutter); padding: 6px var(--spacing-gutter); }
   .mobile-nav .nav-item { flex: 1; min-width: 0; flex-direction: column; justify-content: center; gap: 5px; padding: 8px 0; font-size: 10px; }
 }
