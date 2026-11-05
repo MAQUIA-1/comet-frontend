@@ -18,6 +18,9 @@ const scenarios = [
   { name: 'Library / Tracks', expanded: false, empty: false, library: 'tracks' },
   { name: 'Device Information', expanded: false, empty: false, device: true },
   { name: 'Device Information / System', expanded: false, empty: false, device: true, mobileOnly: true, scrollToSystem: true },
+  { name: 'Signal Chain / Direct', expanded: false, empty: false, chain: 'direct' },
+  { name: 'Signal Chain / Modules', expanded: false, empty: false, chain: 'modules' },
+  { name: 'Signal Chain / Parameters', expanded: false, empty: false, chain: 'modules', mobileOnly: true, scrollToParameters: true },
   { name: 'Now Playing', expanded: true, empty: false },
   { name: 'Now Playing / Up next', expanded: true, empty: false, mobileOnly: true, scrollToQueue: true },
   { name: 'Empty', expanded: true, empty: true },
@@ -52,6 +55,16 @@ try {
           await page.locator('.mobile-device-link').click()
         } else await page.locator('.sidebar').getByRole('button', { name: 'Device Information', exact: true }).click()
       }
+      if (scenario.chain) {
+        await page.getByRole('button', { name: 'Signal Chain', exact: true }).click()
+        if (scenario.chain === 'modules') {
+          await page.getByRole('button', { name: 'Add module' }).click()
+          await page.getByRole('button', { name: 'Gain', exact: true }).click()
+          await page.getByRole('button', { name: 'Add module' }).click()
+          await page.getByRole('button', { name: 'Parametric EQ', exact: true }).click()
+          await page.getByRole('switch', { name: 'Processing', exact: true }).click()
+        }
+      }
       if (scenario.empty) {
         await page.locator('.dev-tools summary').click()
         await page.locator('#dev-scenario').selectOption('empty')
@@ -63,6 +76,7 @@ try {
       }
       if (scenario.scrollToQueue) await page.locator('.up-next').scrollIntoViewIfNeeded()
       if (scenario.scrollToSystem) await page.locator('.device-section').last().scrollIntoViewIfNeeded()
+      if (scenario.scrollToParameters) await page.locator('.signal-parameters').scrollIntoViewIfNeeded()
       // Hide the development launcher only for the artifact, after scenario setup.
       await page.addStyleTag({ content: '.dev-tools { visibility: hidden !important; }' })
       await page.mouse.move(0, 0)

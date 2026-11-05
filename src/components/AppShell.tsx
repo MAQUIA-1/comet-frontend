@@ -3,12 +3,14 @@ import { ExpandedPlayer } from './ExpandedPlayer'
 import { DevTools } from './DevTools'
 import { Player } from './Playback'
 import { useMockPlayback } from '../mocks/playback'
+import { useSignalChain } from '../mocks/signalChain'
 import { useMessages } from '../i18n'
 import { useState } from 'react'
 import { Library, ListMusic, Workflow, Settings, Server, ChevronRight } from 'lucide-react'
 import { PageHeader } from './PageHeader'
 import { LibraryPage } from '../pages/LibraryPage'
 import { DeviceInformationPage } from '../pages/DeviceInformationPage'
+import { SignalChainPage } from '../pages/SignalChainPage'
 import { PrototypePage } from '../pages/PrototypePage'
 
 const pages = [
@@ -25,6 +27,7 @@ export function AppShell() {
   const { mode } = useViewport()
   const text = useMessages()
   const playback = useMockPlayback()
+  const chain = useSignalChain()
   const [expanded, setExpanded] = useState(false)
   const [active, setActive] = useState<PageId>('library')
   const navigate = (id: PageId) => setActive(id)
@@ -47,7 +50,7 @@ export function AppShell() {
         <PageHeader title={text.pages[active]} collapsed={collapsed} onToggleSidebar={() => setCollapsed(value => !value)} />
         <div className="page-scroll" key={active} tabIndex={0} role="region" aria-label={text.pages[active]}><>
           {active === 'settings' && <button className="mobile-device-link nav-item" onClick={() => navigate('device')}><Server size={20} /><span>{text.pages.device}</span><ChevronRight size={18} /></button>}
-          {active === 'library' ? <LibraryPage playback={playback} /> : active === 'device' ? <DeviceInformationPage /> : <PrototypePage />}
+          {active === 'library' ? <LibraryPage playback={playback} /> : active === 'device' ? <DeviceInformationPage /> : active === 'chain' ? <SignalChainPage chain={chain} /> : <PrototypePage />}
         </></div>
       </div>
     </main>

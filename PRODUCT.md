@@ -26,7 +26,7 @@ HDMI-I2S는 하드웨어 배경 정보다. 표준 Linux 오디오 인터페이�
 
 ## 현재 구현 상태
 
-App Shell, 4개 탐색 메뉴, 공통 확장 Now Playing, 재생 Mock 조작과 Up next를 구현했다. Library는 Albums·Artists·Tracks·Folders 탐색과 앨범 상세·곡 선택을 Mock으로 제공하며, 로컬 현재 곡은 곡 목록에서 공통으로 표시한다. Device Information은 ALSA 출력·PCM과 MPD 상태, Ethernet 링크 및 시스템 전체 트래픽을 예시 값으로 표시하는 목업이다. 트래픽·시스템 수치는 시뮬레이션이며 실제 기기를 읽지 않는다. Playlists·Signal Chain·Settings의 본문은 플레이스홀더이며 모바일 Settings에는 기기 정보 진입점이 있다. Library 검색은 현재 섹션의 Mock 항목을 대상으로 하며 정렬·고급 필터는 아직 구현하지 않았다. 폴더는 가상의 계층이다. 아래 기능표는 제품 방향이며 모든 기능이 구현됐다는 뜻은 아니다.
+App Shell, 4개 탐색 메뉴, 공통 확장 Now Playing, 재생 Mock 조작과 Up next를 구현했다. Library는 Albums·Artists·Tracks·Folders 탐색과 앨범 상세·곡 선택을 Mock으로 제공하며, 로컬 현재 곡은 곡 목록에서 공통으로 표시한다. Signal Chain은 Direct를 기본으로 예시 모듈의 추가·순서 변경·Bypass·삭제와 파라미터 조작을 시뮬레이션한다. Device Information은 ALSA 출력·PCM과 MPD 상태, Ethernet 링크 및 시스템 전체 트래픽을 예시 값으로 표시하는 목업이다. 트래픽·시스템 수치는 시뮬레이션이며 실제 기기를 읽지 않는다. Playlists·Settings의 본문은 플레이스홀더이며 모바일 Settings에는 기기 정보 진입점이 있다. Library 검색은 현재 섹션의 Mock 항목을 대상으로 하며 정렬·고급 필터는 아직 구현하지 않았다. 폴더는 가상의 계층이다. 아래 기능표는 제품 방향이며 모든 기능이 구현됐다는 뜻은 아니다.
 
 ## 핵심 기능과 화면 범위
 
