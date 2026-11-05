@@ -12,7 +12,10 @@ Charcoal Black / White / Champagne Gold를 기본 방향으로 삼는다. Canvas
 VS Code Modern UI와 유사하게 Canvas 위에 독립된 rounded panel을 배치한다. 패널 사이에는 일정한 gutter를 둔다. 불필요한 카드 중첩, 테두리, 그림자는 최소화한다. 데스크톱은 좌측 사이드바, 중앙 메인 콘텐츠, 하단 전체 너비 고정 플레이어의 3개 영역으로 구성하며 전역 상단바를 두지 않는다. 주요 영역 각각을 독립적인 rounded panel로 표현한다. 패널의 정확한 크기는 미정이다. 고정 플레이어가 콘텐츠를 가리지 않도록 공간을 확보한다.
 
 ## 타이포그래피
-시스템 sans-serif를 초기 기본값으로 사용한다. 제목, 본문, 보조 정보의 크기·굵기·명도 차이로 정보 계층을 만든다. 최종 폰트와 상세 타입 스케일은 미정이다.
+기본 스택은 `Geist → Pretendard Variable → system-ui → sans-serif`다. Geist는 영문·숫자·기호를, Pretendard Variable은 한글과 Geist에 없는 문자를 담당한다. 본문은 400, 메뉴·주요 UI는 500, 제목과 COMET 워드마크는 600을 사용한다. 워드마크의 넓은 자간은 유지한다. 상세 타입 스케일은 목업 검증 대상이다.
+공식 npm 배포본 Geist 1.9.1 및 Pretendard 1.3.9의 수정하지 않은 normal 가변 WOFF2 각 1개만 `src/assets/fonts/`에서 자체 호스팅한다. 정적 굵기·이탤릭·외부 CDN은 로드하지 않는다. 폰트 정의와 우선순위는 `src/styles/global.css`에 집중한다.
+두 폰트의 SIL OFL 1.1 원문과 저작권 고지는 `public/licenses/`에 보존하며 빌드 결과에도 포함한다. 출처는 각각 https://github.com/vercel/geist-font 및 https://github.com/orioncactus/pretendard 이다.
+Geist Mono는 현재 사용처가 없어 로드하지 않는다. 기술 수치 표현이 구체화되면 선택적으로 도입한다.
 
 ## 반응형 UI
 작은 화면에서도 콘텐츠가 잘리거나 불필요한 가로 스크롤이 생기지 않도록 한다. 패널 간 gutter와 정보 계층을 유지하고 여백을 조절한다. 구체적인 breakpoint와 패널 크기는 미정이다. 데스크톱에서는 좌측 사이드바와 하단 고정 플레이어를 사용한다. 모바일은 데스크톱 사이드바를 단순 축소하지 않고 별도 내비게이션 패턴을 적용한다.
