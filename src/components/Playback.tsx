@@ -30,14 +30,21 @@ export function Player({ state, onOpen }: { state: MockPlayback; onOpen: () => v
 }
 export function NowPlaying({ state }: { state: MockPlayback }) {
   const { playback: t, player: p } = useMessages()
+  if (state.scenario === 'empty') {
+    return <div className="now-playing">
+      <div className="empty-playing"><Artwork /><h2>{p.empty}</h2><p>{p.waiting}</p></div>
+      <Queue state={state} />
+    </div>
+  }
   return <div className="now-playing">
     <div className="listening-view"><Artwork art={state.track?.art} large /><div className="listening-info">
-      <p className="source-label">{t[state.scenario]} <span> / {state.scenario === 'empty' ? t.idle : state.playing ? t.playing : t.paused}</span></p>
-      <h2>{state.track?.title ?? (state.scenario === 'empty' ? p.empty : t.noMetadata)}</h2>
-      <p className="artist-name">{state.track?.artist ?? (state.scenario === 'empty' ? p.waiting : t.externalSelection)}</p>
-      {state.track && <p className="album-name">{state.track.album}</p>}
+      <h2>{state.track?.title ?? t[state.scenario]}</h2>
+      {state.track ? <p className="track-metadata">{[state.track.artist, state.track.album].filter(Boolean).join(' · ')}</p> : <>
+        <p className="track-metadata">{t.noMetadata}</p>
+        <p className="metadata-hint">{t.externalSelection}</p>
+      </>}
       <div className="expanded-controls"><Seek state={state} /><Controls state={state} /></div>
-      <dl className="audio-details"><div><dt>{t.format}</dt><dd>{state.scenario === 'local' ? 'FLAC · 24-bit / 96 kHz' : t.unavailable}</dd></div></dl>
+      <dl className="audio-details"><div><dt>{t.source}</dt><dd>{t[state.scenario]}</dd></div><div><dt>{t.format}</dt><dd>{state.scenario === 'local' ? 'FLAC · 24-bit / 96 kHz' : t.unavailable}</dd></div></dl>
     </div></div>
     <Queue state={state} />
   </div>

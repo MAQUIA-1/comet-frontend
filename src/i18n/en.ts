@@ -9,7 +9,7 @@ export const en = {
   placeholder: { title: 'A space for what comes next', description: 'This page will take shape in the next stage.' },
   queue: { next: 'Up next', empty: 'No more tracks in the queue.', unavailable: 'Queue is not available in this preview scenario.' },
   development: { title: 'Dev tools' },
-  playback: { local: 'Local / NAS', spotify: 'Spotify Connect', airplay: 'AirPlay', bluetooth: 'Bluetooth', empty: 'No input', preview: 'Preview scenario', mockOnly: 'UI simulation · no audio', noMetadata: 'Metadata unavailable', externalSelection: 'Select music on your connected device.', idle: 'Idle', playing: 'Playing', paused: 'Paused', format: 'Source format', unavailable: 'Not provided in this scenario',  },
+  playback: { local: 'Local / NAS', spotify: 'Spotify Connect', airplay: 'AirPlay', bluetooth: 'Bluetooth', empty: 'No input', preview: 'Preview scenario', mockOnly: 'UI simulation · no audio', noMetadata: 'Metadata unavailable', externalSelection: 'Select music on your connected device.', idle: 'Idle', playing: 'Playing', paused: 'Paused', source: 'Input source', format: 'Source format', unavailable: 'Not provided in this scenario',  },
 }
 
 // Preserve the key structure while allowing translated string values.

@@ -12,6 +12,7 @@ const viewports = [
 const scenarios = [
   { name: 'Library', expanded: false, empty: false },
   { name: 'Now Playing', expanded: true, empty: false },
+  { name: 'Now Playing / Up next', expanded: true, empty: false, mobileOnly: true, scrollToQueue: true },
   { name: 'Empty', expanded: true, empty: true },
 ]
 const timestamp = new Date().toISOString().replaceAll(':', '-')
@@ -27,6 +28,7 @@ try {
   const frames = []
   for (const viewport of viewports) {
     for (const scenario of scenarios) {
+      if (scenario.mobileOnly && viewport.name !== 'Mobile') continue
       const page = await browser.newPage({ viewport: { width: viewport.width, height: viewport.height }, deviceScaleFactor: 1, reducedMotion: 'reduce' })
       const errors = []
       page.on('pageerror', error => errors.push(error.message))
@@ -41,11 +43,12 @@ try {
         await page.getByRole('button', { name: 'Open Now Playing' }).click()
         await page.getByRole('dialog').waitFor()
       }
+      if (scenario.scrollToQueue) await page.locator('.up-next').scrollIntoViewIfNeeded()
       // Hide the development launcher only for the artifact, after scenario setup.
       await page.addStyleTag({ content: '.dev-tools { visibility: hidden !important; }' })
       await page.mouse.move(0, 0)
       if (errors.length) throw new Error(errors.join('\n'))
-      const filename = `${viewport.name.toLowerCase()}-${scenario.name.toLowerCase().replaceAll(' ', '-')}.png`
+      const filename = `${viewport.name.toLowerCase()}-${scenario.name.toLowerCase().replaceAll(/[^a-z0-9]+/g, '-')}.png`
       await page.screenshot({ path: join(output, filename), animations: 'disabled' })
       frames.push({ title: `${viewport.name} / ${scenario.name}`, filename, width: viewport.width, height: viewport.height })
       await page.close()

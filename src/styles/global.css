@@ -118,11 +118,9 @@
 .rain { background: linear-gradient(120deg, var(--color-muted), var(--color-canvas) 75%); }
 .art-orbit { width: 65%; height: 65%; border: 1px solid var(--color-muted); border-radius: 50%; transform: rotate(-30deg) scaleX(.65); }
 .art-orbit::after { content: ''; position: absolute; inset: 15%; border: 1px solid var(--color-muted); border-radius: 50%; }
-.source-label { color: var(--color-muted); font-size: 12px; margin-bottom: 20px; }
-.source-label span { color: var(--color-foreground); }
 .listening-info h2 { font-size: clamp(26px, 3vw, 42px); font-weight: 600; line-height: 1.15; letter-spacing: -.035em; overflow-wrap: anywhere; }
-.artist-name { margin-top: 16px; font-size: 18px; }
-.album-name { margin-top: 6px; font-size: 14px; color: var(--color-muted); }
+.track-metadata { margin-top: 16px; font-size: 16px; color: var(--color-muted); line-height: 1.5; overflow-wrap: anywhere; }
+.metadata-hint { margin-top: 6px; font-size: 14px; color: var(--color-muted); overflow-wrap: anywhere; }
 .audio-details { display: flex; flex-wrap: wrap; gap: 24px; margin-top: 40px; }
 .audio-details dt { font-size: 11px; color: var(--color-muted); margin-bottom: 8px; }
 .audio-details dd { font-size: 13px; }
@@ -183,6 +181,13 @@
 .queue-track > span:last-child { font-size: 11px; font-variant-numeric: tabular-nums; flex-shrink: 0; }
 .queue-empty { color: var(--color-muted); font-size: 13px; }
 
+.expanded-controls .play-button { width: 52px; height: 52px; color: var(--color-foreground); }
+.expanded-controls .play-button svg { width: 24px; height: 24px; }
+.empty-playing { max-width: 1100px; margin: 48px auto; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 16px; }
+.empty-playing .album-art { width: 96px; height: 96px; border-radius: var(--radius-panel); }
+.empty-playing h2 { font-size: 26px; font-weight: 600; }
+.empty-playing p { color: var(--color-muted); font-size: 14px; }
+
 /* Responsive modes: one shared boundary for every product surface. */
 @media (width < theme(--breakpoint-desktop)) {
   .app-shell, .app-shell.is-collapsed { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0,1fr) 72px auto; padding-bottom: max(var(--spacing-gutter), env(safe-area-inset-bottom)); }
@@ -192,7 +197,12 @@
   .player .transport-buttons { gap: 0; }
   .mobile-nav { display: flex; gap: var(--spacing-gutter); padding: 6px var(--spacing-gutter); }
   .mobile-nav .nav-item { flex: 1; min-width: 0; flex-direction: column; justify-content: center; gap: 5px; padding: 8px 0; font-size: 10px; }
-  .listening-view { padding-top: 8px; gap: 24px; }
+  .listening-view { padding-top: 0; gap: 20px; padding-bottom: 8px; }
+  .listening-view > .album-art-large { width: min(100%, clamp(220px, 36dvh, 320px)); justify-self: center; }
+  .track-metadata { margin-top: 12px; }
+  .expanded-player .page-header { margin-bottom: 16px; }
+  .expanded-controls { margin-top: 20px; }
+  .up-next { margin-top: 24px; padding-top: 20px; }
   .album-art { width: 42px; height: 42px; }
   .album-art-large { width: 100%; height: auto; }
   .audio-details { margin-top: 24px; }
