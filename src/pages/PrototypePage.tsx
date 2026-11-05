@@ -1,11 +1,9 @@
-export function PrototypePage() {
-  return (
-    <main className="min-h-dvh bg-canvas p-gutter text-foreground">
-      <section aria-labelledby="prototype-title" className="rounded-panel bg-surface p-6 sm:p-10">
-        <p className="mb-2 text-sm font-medium text-muted">UI/UX Prototype</p>
-        <h1 id="prototype-title" className="text-3xl font-semibold tracking-tight">Comet</h1>
-        <p className="mt-3 max-w-prose text-sm leading-relaxed text-muted">웹 플레이어 UI/UX 프로토타입을 위한 기본 환경입니다.</p>
-      </section>
-    </main>
-  )
+import { PanelLeftClose, PanelLeftOpen } from 'lucide-react'
+
+export function PrototypePage({ title, collapsed, onToggleSidebar }: { title: string; collapsed: boolean; onToggleSidebar: () => void }) {
+  return <div className="page-placeholder" key={title}>
+    <header><div className="page-title-row"><button className="sidebar-toggle icon-button" onClick={onToggleSidebar} aria-label={collapsed ? '사이드바 펼치기' : '사이드바 접기'} title={collapsed ? '사이드바 펼치기' : '사이드바 접기'} aria-expanded={!collapsed}>{collapsed ? <PanelLeftOpen size={20} /> : <PanelLeftClose size={20} />}</button><h1>{title}</h1></div></header>
+    <div className="placeholder-body"><p>아직 채워지지 않은 공간</p><p>이 화면의 콘텐츠는 다음 단계에서 구성합니다.</p></div>
+    <p className="prototype-note">COMET / UI PROTOTYPE</p>
+  </div>
 }
