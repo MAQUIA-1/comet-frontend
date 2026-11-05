@@ -255,7 +255,6 @@
 .library-track-info strong { font-size: 14px; font-weight: 500; }
 .library-track-info small { color: var(--color-muted); font-size: 12px; margin-top: 4px; }
 .library-track-play { color: var(--color-muted); }
-.artist-list { max-width: 720px; }
 .artist-item { display: flex; align-items: center; gap: 16px; width: 100%; padding: 12px; text-align: left; border-radius: var(--radius-control); }
 .artist-avatar { width: 52px; height: 52px; border-radius: var(--radius-control); display: grid; place-items: center; color: var(--color-muted); background: var(--color-raised); flex-shrink: 0; }
 .artist-item strong, .artist-item small { display: block; }
