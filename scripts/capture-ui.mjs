@@ -16,6 +16,8 @@ const scenarios = [
   { name: 'Library / Artists', expanded: false, empty: false, library: 'artists' },
   { name: 'Library / Folders', expanded: false, empty: false, library: 'folders' },
   { name: 'Library / Tracks', expanded: false, empty: false, library: 'tracks' },
+  { name: 'Device Information', expanded: false, empty: false, device: true },
+  { name: 'Device Information / System', expanded: false, empty: false, device: true, mobileOnly: true, scrollToSystem: true },
   { name: 'Now Playing', expanded: true, empty: false },
   { name: 'Now Playing / Up next', expanded: true, empty: false, mobileOnly: true, scrollToQueue: true },
   { name: 'Empty', expanded: true, empty: true },
@@ -44,6 +46,12 @@ try {
       if (scenario.library === 'artists') await page.getByRole('button', { name: 'Artists', exact: true }).click()
       if (scenario.library === 'folders') await page.getByRole('button', { name: 'Folders', exact: true }).click()
       if (scenario.library === 'tracks') await page.getByRole('button', { name: 'Tracks', exact: true }).click()
+      if (scenario.device) {
+        if (viewport.name === 'Mobile') {
+          await page.getByRole('button', { name: 'Settings', exact: true }).click()
+          await page.locator('.mobile-device-link').click()
+        } else await page.locator('.sidebar').getByRole('button', { name: 'Device Information', exact: true }).click()
+      }
       if (scenario.empty) {
         await page.locator('.dev-tools summary').click()
         await page.locator('#dev-scenario').selectOption('empty')
@@ -54,6 +62,7 @@ try {
         await page.getByRole('dialog').waitFor()
       }
       if (scenario.scrollToQueue) await page.locator('.up-next').scrollIntoViewIfNeeded()
+      if (scenario.scrollToSystem) await page.locator('.device-section').last().scrollIntoViewIfNeeded()
       // Hide the development launcher only for the artifact, after scenario setup.
       await page.addStyleTag({ content: '.dev-tools { visibility: hidden !important; }' })
       await page.mouse.move(0, 0)
