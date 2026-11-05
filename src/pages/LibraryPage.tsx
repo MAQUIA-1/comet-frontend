@@ -30,7 +30,7 @@ export function LibraryPage({ playback }: { playback: MockPlayback }) {
     {items.length === 0 && <p className="library-empty">{t.noResults}</p>}
     {items.map((track, number) => <button key={track.index} className="library-track" onClick={() => playback.playTrack(track.index)} aria-label={`${t.playTrack} ${track.title} — ${track.artist}`}>
       <span className="library-track-number">{String(number + 1).padStart(2, '0')}</span>
-      <span className="library-track-info"><strong>{track.title}</strong><small>{track.artist}{showAlbum ? ` · ${track.album}` : ''}</small></span>
+      <span className="library-track-info"><strong>{track.title}</strong><small>{track.artist}{showAlbum && <span className="library-track-mobile-album"> · {track.album}</span>}</small></span>
       {showAlbum && <span className="library-track-album">{track.album}</span>}
       <span className="library-duration">{formatTime(track.duration)}</span><Play className="library-track-play" size={16} />
     </button>)}
