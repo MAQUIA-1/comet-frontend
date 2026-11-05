@@ -17,3 +17,17 @@ npm run build
 - `src/styles/global.css`: 디자인 토큰과 전역 스타일
 
 작업 전 PRODUCT.md와 DESIGN.md를 확인한다. 실제 서비스 연동은 포함하지 않는다.
+
+## UI 캡처 보드
+
+```sh
+npx playwright install chromium  # 최초 1회
+npm run capture:ui
+```
+
+PC·모바일의 Library / Now Playing / Empty 6개 화면을 자동 캡처한다. 임시 개발 서버와 브라우저는 실행 후 종료한다.
+`artifacts/ui-board/<실행 시각>/`에 통합 `board.png`, 원본 PNG, 클릭해서 원본을 볼 수 있는 `index.html`, 캡처 목록 `manifest.json`을 생성한다. 생성물은 Git에서 제외한다.
+
+기존 Chromium을 사용하려면 `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH`에 실행 파일 경로를 지정한다. 캡처 대상·화면 크기는 `scripts/capture-ui.mjs` 상단에서 조정한다. 모션은 생략하고 폰트 로딩 후 캡처하며 Dev tools는 결과물에서 숨긴다. 모바일은 현재 보이는 영역만 캡처하므로 아래 스크롤 콘텐츠까지 모두 보여주는 자료는 아니다.
+
+UI 구조·진입 경로·주요 상태·반응형 배치 변경 시 캡처 시나리오도 함께 검토·갱신한다. 현재 6개 화면은 초기 세트이며 고정 규격이 아니다. 새 핵심 영역이 화면 아래에 있으면 해당 스크롤 위치를 별도로 캡처하고, 불필요해진 대상은 제거한다. 캡처 세트가 바뀌면 이 설명도 동기화한다.
