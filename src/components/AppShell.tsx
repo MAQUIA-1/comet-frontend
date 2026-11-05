@@ -1,15 +1,15 @@
-import { MobileNowPlaying } from './MobileNowPlaying'
+import { Queue } from './Queue'
+import { ExpandedPlayer } from './ExpandedPlayer'
 import { DevTools } from './DevTools'
-import { Player, NowPlaying } from './Playback'
+import { Player } from './Playback'
 import { useMockPlayback } from '../mocks/playback'
 import { useMessages } from '../i18n'
-import { useState, useEffect } from 'react'
-import { AudioLines, Library, ListMusic, Workflow, Settings, Server, ChevronRight } from 'lucide-react'
+import { useState } from 'react'
+import { Library, ListMusic, Workflow, Settings, Server, ChevronRight } from 'lucide-react'
 import { PageHeader } from './PageHeader'
 import { PrototypePage } from '../pages/PrototypePage'
 
 const pages = [
-  { id: 'playing', icon: AudioLines, placement: 'main' },
   { id: 'library', icon: Library, placement: 'main' },
   { id: 'playlists', icon: ListMusic, placement: 'main' },
   { id: 'chain', icon: Workflow, placement: 'main' },
@@ -22,32 +22,17 @@ type PageId = (typeof pages)[number]['id'] | typeof devicePage.id
 export function AppShell() {
   const text = useMessages()
   const playback = useMockPlayback()
-  const [mobile, setMobile] = useState(() => matchMedia('(max-width: 767px)').matches)
-  const [sheetOpen, setSheetOpen] = useState(false)
-  const [active, setActive] = useState<PageId>(() => matchMedia('(max-width: 767px)').matches ? 'library' : 'playing')
-  const [returnPage, setReturnPage] = useState<Exclude<PageId, 'playing'>>('library')
-  const navigate = (id: PageId) => {
-    if (mobile && id === 'playing') { setSheetOpen(true); return }
-    if (id !== 'playing') setReturnPage(id)
-    setActive(id)
-  }
-  useEffect(() => {
-    const media = matchMedia('(max-width: 767px)')
-    const update = () => {
-      setMobile(media.matches)
-      setSheetOpen(false)
-      if (media.matches) setActive(current => current === 'playing' ? returnPage : current)
-    }
-    media.addEventListener('change', update)
-    return () => media.removeEventListener('change', update)
-  }, [returnPage])
+  const [expanded, setExpanded] = useState(false)
+  const [queueOpen, setQueueOpen] = useState(false)
+  const [active, setActive] = useState<PageId>('library')
+  const navigate = (id: PageId) => setActive(id)
   const [collapsed, setCollapsed] = useState(false)
-  const navigation = (mobile = false, placement?: 'main' | 'footer') => pages.filter(item => !placement || item.placement === placement).map(({ id, icon: Icon }) =>
+  const navigation = (mobile = false, placement?: 'main' | 'footer') => pages.filter(item => (!placement || item.placement === placement)).map(({ id, icon: Icon }) =>
     <button key={id} className="nav-item" aria-current={active === id ? 'page' : undefined} aria-label={text.pages[id]} title={text.pages[id]} onClick={() => navigate(id)}>
       <Icon size={20} /><span>{mobile ? text.tabs[id] : text.pages[id]}</span>
     </button>,
   )
-  return <div className={`app-shell ${collapsed ? 'is-collapsed' : ''}`}>
+  return <div className={`app-shell ${collapsed ? 'is-collapsed' : ''} ${queueOpen && playback.scenario === 'local' ? 'has-queue' : ''}`}>
     {import.meta.env.DEV && <DevTools playback={playback} />}
     <aside className="sidebar panel" aria-label={text.navigation.sidebar}>
       <button className={collapsed ? 'nav-item' : 'wordmark'} onClick={() => navigate('device')} aria-label={text.pages.device} aria-current={active === 'device' ? 'page' : undefined} title={text.pages.device}>{collapsed ? <Server size={20} /> : <><span>COMET</span><ChevronRight size={18} /></>}</button>
@@ -58,14 +43,15 @@ export function AppShell() {
     <main className="content panel" id="main-content">
       <div className="page-content">
         <PageHeader title={text.pages[active]} collapsed={collapsed} onToggleSidebar={() => setCollapsed(value => !value)} />
-        <div className="page-scroll" key={active} tabIndex={0} role="region" aria-label={text.pages[active]}>{active === 'playing' ? <NowPlaying state={playback} /> : <>
+        <div className="page-scroll" key={active} tabIndex={0} role="region" aria-label={text.pages[active]}><>
           {active === 'settings' && <button className="mobile-device-link nav-item" onClick={() => navigate('device')}><Server size={20} /><span>{text.pages.device}</span><ChevronRight size={18} /></button>}
           <PrototypePage />
-        </>}</div>
+        </></div>
       </div>
     </main>
-    {mobile && <MobileNowPlaying open={sheetOpen} onClose={() => setSheetOpen(false)} playback={playback} />}
-    <Player state={playback} onOpen={() => navigate('playing')} />
+    {queueOpen && playback.scenario === 'local' && <Queue state={playback} panel onClose={() => setQueueOpen(false)} />}
+    <ExpandedPlayer open={expanded} onClose={() => setExpanded(false)} playback={playback} />
+    <Player state={playback} queueOpen={queueOpen} onQueue={() => setQueueOpen(value => !value)} onOpen={() => setExpanded(true)} />
     <nav className="mobile-nav panel" aria-label={text.navigation.mobile}>{navigation(true)}</nav>
   </div>
 }

@@ -1,6 +1,6 @@
 # Comet Frontend
 
-React + TypeScript + Vite + Tailwind CSS v4 기반 UI/UX 프로토타입. 현재 반응형 App Shell과 페이지 전환을 구현했으며 Now Playing과 공유 플레이어 목업을 제공하며 다른 페이지는 플레이스홀더다.
+React + TypeScript + Vite + Tailwind CSS v4 기반 UI/UX 프로토타입. 반응형 App Shell, 재생바에서 여는 PC·모바일 공통 확장 Now Playing 및 대기열 목업을 제공한다. 탐색 페이지는 플레이스홀더다.
 
 ```sh
 npm install

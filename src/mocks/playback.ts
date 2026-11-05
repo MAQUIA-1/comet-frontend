@@ -13,15 +13,14 @@ export function useMockPlayback() {
   const [index, setIndex] = useState(0)
   const [playing, setPlaying] = useState(false)
   const [position, setPosition] = useState(64)
-  const [queueOpen, setQueueOpen] = useState(false)
   const track = scenario === 'empty' || scenario === 'bluetooth' ? null : tracks[index]
   const canControl = scenario === 'local' || scenario === 'spotify'
   const canSeek = scenario === 'local'
   const selectTrack = (next: number) => { setIndex((next + tracks.length) % tracks.length); setPosition(0) }
-  return { scenario, track, index, playing, position, queueOpen, canControl, canSeek,
-    setPosition, setQueueOpen, selectTrack,
+  return { scenario, track, index, playing, position, canControl, canSeek,
+    setPosition, selectTrack,
     toggle: () => { if (canControl) setPlaying(value => !value) },
-    changeScenario: (value: Scenario) => { setScenario(value); setPlaying(value !== 'empty' && value !== 'local'); setPosition(0); setQueueOpen(false) },
+    changeScenario: (value: Scenario) => { setScenario(value); setPlaying(value !== 'empty' && value !== 'local'); setPosition(0) },
   }
 }
 export type MockPlayback = ReturnType<typeof useMockPlayback>
