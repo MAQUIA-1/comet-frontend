@@ -25,3 +25,4 @@
 - 페이지 콘텐츠는 App Shell의 본문 스크롤 영역을 사용하며 플레이어·모바일 탭과 겹치지 않게 한다.
 - 기본 인터랙션 상태는 DESIGN.md와 global.css의 공통 규칙을 사용한다. 페이지 선택, 키보드 포커스, 토글 펼침 및 비활성 상태를 구분한다.
 - 모션은 DESIGN.md의 규격과 global.css의 --motion-* 변수를 사용한다. JS 애니메이션은 공통 motionOptions를 사용하고 모션 감소 설정을 존중한다.
+- 반응형 기준은 global.css의 --breakpoint-desktop을 사용한다. React 화면 모드는 공통 useViewport로 읽고 컴포넌트별 breakpoint 숫자·resize 구독을 추가하지 않는다.

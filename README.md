@@ -12,6 +12,7 @@ npm run build
 - `src/components/`: App Shell 및 공통 UI 컴포넌트
 - `src/pages/`: 페이지
 - `src/mocks/`: 가상 곡 데이터와 프론트엔드 재생 상태
+- `src/layout/`: 공통 화면 모드 Provider
 - `src/i18n/`: 영어 사전과 언어 Provider
 - `src/styles/global.css`: 디자인 토큰과 전역 스타일
 

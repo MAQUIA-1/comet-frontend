@@ -1,4 +1,4 @@
-import { Queue } from './Queue'
+import { useViewport } from '../layout/ViewportProvider'
 import { ExpandedPlayer } from './ExpandedPlayer'
 import { DevTools } from './DevTools'
 import { Player } from './Playback'
@@ -20,10 +20,10 @@ const devicePage = { id: 'device' } as const
 type PageId = (typeof pages)[number]['id'] | typeof devicePage.id
 
 export function AppShell() {
+  const { mode } = useViewport()
   const text = useMessages()
   const playback = useMockPlayback()
   const [expanded, setExpanded] = useState(false)
-  const [queueOpen, setQueueOpen] = useState(false)
   const [active, setActive] = useState<PageId>('library')
   const navigate = (id: PageId) => setActive(id)
   const [collapsed, setCollapsed] = useState(false)
@@ -32,7 +32,7 @@ export function AppShell() {
       <Icon size={20} /><span>{mobile ? text.tabs[id] : text.pages[id]}</span>
     </button>,
   )
-  return <div className={`app-shell ${collapsed ? 'is-collapsed' : ''} ${queueOpen && playback.scenario === 'local' ? 'has-queue' : ''}`}>
+  return <div data-viewport={mode} className={`app-shell ${collapsed ? 'is-collapsed' : ''}`}>
     {import.meta.env.DEV && <DevTools playback={playback} />}
     <aside className="sidebar panel" aria-label={text.navigation.sidebar}>
       <button className={collapsed ? 'nav-item' : 'wordmark'} onClick={() => navigate('device')} aria-label={text.pages.device} aria-current={active === 'device' ? 'page' : undefined} title={text.pages.device}>{collapsed ? <Server size={20} /> : <><span>COMET</span><ChevronRight size={18} /></>}</button>
@@ -49,9 +49,8 @@ export function AppShell() {
         </></div>
       </div>
     </main>
-    {queueOpen && playback.scenario === 'local' && <Queue state={playback} panel onClose={() => setQueueOpen(false)} />}
     <ExpandedPlayer open={expanded} onClose={() => setExpanded(false)} playback={playback} />
-    <Player state={playback} queueOpen={queueOpen} onQueue={() => setQueueOpen(value => !value)} onOpen={() => setExpanded(true)} />
+    <Player state={playback} onOpen={() => setExpanded(true)} />
     <nav className="mobile-nav panel" aria-label={text.navigation.mobile}>{navigation(true)}</nav>
   </div>
 }

@@ -1,13 +1,11 @@
 import { motionOptions } from '../utils/motion'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { ChevronDown } from 'lucide-react'
 import { useMessages } from '../i18n'
-import { Queue } from './Queue'
-import { NowPlaying, Controls } from './Playback'
+import { NowPlaying } from './Playback'
 import type { MockPlayback } from '../mocks/playback'
 
 export function ExpandedPlayer({ open, onClose, playback }: { open: boolean; onClose: () => void; playback: MockPlayback }) {
-  const [queueOpen, setQueueOpen] = useState(false)
   const ref = useRef<HTMLDialogElement>(null)
   const closing = useRef(false)
   const text = useMessages()
@@ -16,7 +14,6 @@ export function ExpandedPlayer({ open, onClose, playback }: { open: boolean; onC
     if (open && !dialog.open) {
       dialog.showModal()
       dialog.scrollTop = 0
-      setQueueOpen(false)
       dialog.animate([{ transform: 'translateY(100%)' }, { transform: 'translateY(0)' }], motionOptions(dialog, 'enter'))
     } else if (!open) dialog.close()
   }, [open])
@@ -37,9 +34,6 @@ export function ExpandedPlayer({ open, onClose, playback }: { open: boolean; onC
       <button className="icon-button" onClick={() => void minimize()} aria-label={text.navigation.minimize}><ChevronDown size={24} /></button>
       <h1 id="expanded-player-title">{text.pages.playing}</h1>
     </header>
-    {queueOpen && playback.scenario === 'local' ? <>
-      <Queue state={playback} onClose={() => setQueueOpen(false)} />
-      <div className="queue-controls"><Controls state={playback} /></div>
-    </> : <NowPlaying state={playback} onQueue={() => setQueueOpen(true)} />}
+    <NowPlaying state={playback} />
   </dialog>
 }
