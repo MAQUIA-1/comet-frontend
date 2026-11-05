@@ -1,6 +1,6 @@
 # Comet Frontend
 
-React + TypeScript + Vite + Tailwind CSS v4 기반 UI/UX 프로토타입 초기 환경.
+React + TypeScript + Vite + Tailwind CSS v4 기반 UI/UX 프로토타입. 현재 반응형 App Shell과 페이지 전환을 구현했으며 개별 페이지는 플레이스홀더다.
 
 ```sh
 npm install
@@ -9,7 +9,7 @@ npm run typecheck
 npm run build
 ```
 
-- `src/components/`: 공통 UI 컴포넌트 (현재 비어 있음)
+- `src/components/`: App Shell 및 공통 UI 컴포넌트
 - `src/pages/`: 페이지
 - `src/mocks/`: 목업 데이터 (현재 비어 있음)
 - `src/styles/global.css`: 디자인 토큰과 전역 스타일
