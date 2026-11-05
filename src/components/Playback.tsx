@@ -33,7 +33,6 @@ export function NowPlaying({ state }: { state: MockPlayback }) {
   if (state.scenario === 'empty') {
     return <div className="now-playing">
       <div className="empty-playing"><Artwork /><h2>{p.empty}</h2><p>{p.waiting}</p></div>
-      <Queue state={state} />
     </div>
   }
   return <div className="now-playing">
