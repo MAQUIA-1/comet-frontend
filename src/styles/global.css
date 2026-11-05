@@ -59,7 +59,7 @@
 .page-scroll { min-height: 0; flex: 1; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: var(--color-muted) transparent; }
 .page-placeholder { min-height: 100%; display: flex; flex-direction: column; }
 .page-header h1 { font-size: clamp(26px, 3vw, 36px); font-weight: 600; letter-spacing: -.035em; line-height: 1.2; }
-.player { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0,1fr) minmax(220px, 1.2fr) minmax(0,1fr); align-items: center; padding: 12px 20px; gap: 24px; }
+.player { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0,1fr) minmax(260px, 1.8fr) minmax(0,1fr); align-items: center; padding: 12px 20px; gap: 24px; }
 .track-summary { display: flex; align-items: center; gap: 14px; text-align: left; min-width: 0; border-radius: var(--radius-control); }
 .artwork { display: grid; place-items: center; width: 52px; height: 52px; flex-shrink: 0; background: var(--color-raised); color: var(--color-muted); border-radius: var(--radius-control); }
 .track-summary > span:last-child { min-width: 0; }
@@ -68,7 +68,7 @@
 .track-subtitle { margin-top: 5px; font-size: 11px; color: var(--color-muted); }
 .transport-buttons { display: flex; justify-content: center; gap: 12px; }
 .play-button { background: var(--color-raised); }
-.progress { display: flex; align-items: center; gap: 12px; color: var(--color-muted); font-size: 10px; }
+.progress { display: flex; align-items: center; gap: 8px; color: var(--color-muted); font-size: 10px; }
 .progress-track { flex: 1; height: 3px; background: var(--color-raised); }
 .player-end { display: flex; align-items: center; justify-content: flex-end; gap: 16px; font-size: 11px; color: var(--color-muted); }
 .is-collapsed { grid-template-columns: 72px minmax(0, 1fr); }
@@ -91,6 +91,12 @@
 
 /* Shared control states. Keep state changes independent of layout. */
 .app-shell {
+  --motion-duration-feedback: 120ms;
+  --motion-duration-enter: 240ms;
+  --motion-duration-exit: 200ms;
+  --motion-ease-feedback: ease-out;
+  --motion-ease-enter: cubic-bezier(0.2, 0, 0, 1);
+  --motion-ease-exit: cubic-bezier(0.4, 0, 1, 1);
   --control-hover-background: var(--color-raised);
   --control-pressed-background: var(--control-hover-background);
   --control-focus-color: var(--color-muted);
@@ -131,7 +137,7 @@
 .audio-details { display: flex; flex-wrap: wrap; gap: 24px; margin-top: 40px; }
 .audio-details dt { font-size: 11px; color: var(--color-muted); margin-bottom: 8px; }
 .audio-details dd { font-size: 13px; }
-.progress input { min-width: 0; flex: 1; accent-color: var(--color-accent); height: 20px; cursor: pointer; }
+.progress input { min-width: 0; flex: 1; appearance: none; height: 24px; margin: 0; background: linear-gradient(to right, var(--color-accent) var(--seek-position), var(--color-raised) var(--seek-position)) center / 100% 3px no-repeat; cursor: pointer; }
 .progress input:disabled { cursor: default; opacity: .4; }
 .queue-preview { margin-top: 32px; border-top: 1px solid var(--color-raised); padding-top: 16px; }
 .queue-preview header { display: flex; align-items: center; justify-content: space-between; }
@@ -152,7 +158,7 @@
 .mobile-now-controls { display: none; }
 @media (max-width: 767px) {
   .app-shell, .app-shell.is-collapsed { grid-template-rows: minmax(0,1fr) 72px auto; }
-  .player .progress, .player .skip, .player .player-end, .player .track-subtitle { display: none; }
+  .player .progress, .player .skip, .player .player-end { display: none; }
   .player .track-summary { align-self: stretch; }
   .player .transport { display: flex; justify-content: center; }
   .mobile-now-controls { display: block; margin-top: 24px; }
@@ -180,3 +186,32 @@
 .mobile-playing-sheet .page-header { margin-bottom: 24px; }
 .mobile-playing-sheet .listening-view { max-width: 380px; }
 .mobile-playing-sheet .now-playing { padding-bottom: 24px; }
+
+/* Animate feedback only; geometry, focus and page changes stay immediate. */
+.app-shell :is(.nav-item, .wordmark, .icon-button, .track-summary) {
+  transition: background-color var(--motion-duration-feedback) var(--motion-ease-feedback), color var(--motion-duration-feedback) var(--motion-ease-feedback);
+}
+.app-shell button:disabled { transition: none; }
+@media (prefers-reduced-motion: reduce) {
+  .app-shell { --motion-duration-feedback: 0ms; --motion-duration-enter: 0ms; --motion-duration-exit: 0ms; }
+}
+
+.progress input::-webkit-slider-runnable-track { height: 3px; background: transparent; }
+.progress input::-webkit-slider-thumb { appearance: none; width: 12px; height: 12px; margin-top: -4.5px; border: 0; border-radius: var(--radius-control); background: var(--color-accent); box-shadow: none; }
+.progress input::-moz-range-track { height: 3px; background: transparent; }
+.progress input::-moz-range-thumb { width: 12px; height: 12px; border: 0; border-radius: var(--radius-control); background: var(--color-accent); box-shadow: none; }
+@media (pointer: coarse) { .progress input { height: 40px; } }
+
+.progress > span {
+  flex: 0 0 5ch;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.progress > span:first-child { text-align: left; }
+.progress > span:last-child { text-align: right; }
+
+@media (min-width: 768px) {
+  .player .transport { display: flex; flex-direction: column; gap: 8px; }
+  .player .progress { width: 100%; }
+  .player .progress input { height: 16px; }
+}

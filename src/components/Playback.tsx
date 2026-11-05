@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react'
 import { Music2, Play, Pause, SkipBack, SkipForward, ListMusic, X } from 'lucide-react'
 import { useMessages } from '../i18n'
 import { formatTime, tracks } from '../mocks/playback'
@@ -16,7 +17,7 @@ function Controls({ state }: { state: MockPlayback }) {
 }
 function Seek({ state }: { state: MockPlayback }) {
   const { player: t } = useMessages()
-  return <div className="progress"><span>{formatTime(state.position)}</span><input aria-label={t.seek} type="range" min={0} max={state.track?.duration ?? 0} value={state.position} disabled={!state.canSeek || !state.track} onChange={event => state.setPosition(Number(event.target.value))} /><span>{state.track ? formatTime(state.track.duration) : '—:—'}</span></div>
+  return <div className="progress"><span>{formatTime(state.position)}</span><input aria-label={t.seek} type="range" style={{ '--seek-position': `${state.track ? state.position / state.track.duration * 100 : 0}%` } as CSSProperties} min={0} max={state.track?.duration ?? 0} value={state.position} disabled={!state.canSeek || !state.track} onChange={event => state.setPosition(Number(event.target.value))} /><span>{state.track ? formatTime(state.track.duration) : '—:—'}</span></div>
 }
 export function Player({ state, onOpen }: { state: MockPlayback; onOpen: () => void }) {
   const { player: t, playback: m } = useMessages()

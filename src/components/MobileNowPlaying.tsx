@@ -1,3 +1,4 @@
+import { motionOptions } from '../utils/motion'
 import { useEffect, useRef } from 'react'
 import { ChevronDown } from 'lucide-react'
 import { useMessages } from '../i18n'
@@ -13,18 +14,16 @@ export function MobileNowPlaying({ open, onClose, playback }: { open: boolean; o
     if (open && !dialog.open) {
       dialog.showModal()
       dialog.scrollTop = 0
-      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        dialog.animate([{ transform: 'translateY(100%)' }, { transform: 'translateY(0)' }], { duration: 240, easing: 'ease-out' })
-      }
+      dialog.animate([{ transform: 'translateY(100%)' }, { transform: 'translateY(0)' }], motionOptions(dialog, 'enter'))
     } else if (!open) dialog.close()
   }, [open])
   async function minimize() {
     if (closing.current) return
     closing.current = true
     const dialog = ref.current!
-    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      await dialog.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(100%)' }], { duration: 200, easing: 'ease-in', fill: 'forwards' }).finished.catch(() => {})
-    }
+    const transform = getComputedStyle(dialog).transform
+    dialog.getAnimations().forEach(animation => animation.cancel())
+    await dialog.animate([{ transform }, { transform: 'translateY(100%)' }], { ...motionOptions(dialog, 'exit'), fill: 'forwards' }).finished.catch(() => {})
     dialog.close()
     dialog.getAnimations().forEach(animation => animation.cancel())
     closing.current = false
