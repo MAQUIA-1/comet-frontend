@@ -1,7 +1,13 @@
 # Comet 디자인 방향
 
+## 명세 상태
+
+- 구조·동작: 승인된 현재 목업 기준이다. 내비게이션, 확장 플레이어 진입·닫기, 상시 Up next, 공통 breakpoint 및 인터랙션·모션 규칙을 임의로 바꾸지 않는다.
+- 시각 수치: 현재 구현에 적용된 크기·간격·곡률은 검토 가능한 목업 값이다. 조정 시 코드와 관련 수치를 동기화한다.
+- 미정: 상세 페이지 UX와 실제 서비스 capability 등 명시된 미정 사항은 별도 설계 대상이다. Mock 시나리오를 서비스 명세로 확정하지 않는다.
+
 ## 기준 파일
-디자인 토큰과 전역 스타일은 `src/styles/global.css`에서 관리한다. Tailwind CSS v4의 CSS-first `@theme`을 사용한다. 현재 수치는 확정 규격이 아닌 초기 제안값이다.
+디자인 토큰과 전역 스타일은 `src/styles/global.css`에서 관리한다. Tailwind CSS v4의 CSS-first `@theme`을 사용한다. 색상·곡률·여백의 세부 수치는 목업 제안값이며, 공통 화면 전환 기준과 동작 규칙은 아래 명세를 따른다.
 
 ## 색상과 형태
 Charcoal Black / White / Champagne Gold를 기본 방향으로 삼는다. Canvas #101113, Surface #202123, Raised Surface #2B2C2F, Foreground #F5F5F3, Muted #A0A1A4, Accent #C6A66B를 제안한다.
@@ -24,7 +30,7 @@ Geist Mono는 현재 사용처가 없어 로드하지 않는다. 기술 수치 �
 ## 디자인 철학 — 확정
 
 Charcoal Black / White / Champagne Gold, Floating Panel Layout, 절제된 기하학적 형태를 유지한다. 명확한 정보 계층과 일관된 여백·곡률·타이포그래피를 우선한다. 배경색의 미묘한 차이로 영역을 구분하고 모든 정보를 카드로 감싸지 않는다.
-현재 토큰의 정확한 색상, radius, spacing 및 typography는 후보이며 목업 검증 후 확정한다. 변경은 CSS 기준 파일에 집중하고 관련 문서를 동기화한다.
+정확한 색상·radius·spacing 및 글자 크기는 목업 검증 대상이다. 폰트 조합과 굵기 역할은 타이포그래피 절의 기준을 유지한다. 변경은 CSS 기준 파일에 집중하고 관련 문서를 동기화한다.
 
 ## 내비게이션 규칙
 
@@ -32,6 +38,8 @@ Charcoal Black / White / Champagne Gold, Floating Panel Layout, 절제된 기하
 - 탐색 메뉴는 Library → Playlists → Signal Chain → Settings 순서이며 Settings는 하단에 둔다. 선택된 메뉴는 골드 포인트로 강조한다.
 - 데스크톱은 확장형과 아이콘만 남는 축소형을 제공한다. 토글은 본문 패널의 페이지 제목 왼쪽에 배치하며 모바일에서는 숨긴다. 축소 상태에서는 기기를 나타내는 Server 아이콘을 사용한다.
 - 활성 입력 소스와 현재 페이지를 혼동하지 않게 표현한다. 소스 전환 시 탐색 페이지를 강제 변경하지 않고 외부 소스에서도 Library를 유지한다.
+
+- 모바일 하단 탭은 Library · Playlists · Signal Chain · Settings의 4개로 구성한다. Playing 탭은 두지 않고 Empty 상태를 포함해 미니 플레이어에서 Now Playing 시트로 진입한다. 데스크톱에서도 Now Playing은 메뉴 대신 재생바에서 연다.
 
 ## 화면별 표현과 인터랙션
 
@@ -53,7 +61,7 @@ Charcoal Black / White / Champagne Gold, Floating Panel Layout, 절제된 기하
 
 각 단계는 Mock Data와 프론트엔드 임시 상태만 사용한다. 모바일 핵심 구조는 데스크톱 목업 단계에서도 함께 검토한다.
 
-## 현재 App Shell 목업 — 검토용 초안
+## App Shell 구조와 동작
 
 - 접기/펼치기 버튼은 본문 패널의 페이지 제목 왼쪽에 중립색 아이콘으로 배치한다. 접힌 상태에서도 동일한 헤더 위치에서 펼칠 수 있다. 별도 전역 상단바를 추가하지 않는다. 축소 레일에서는 COMET 워드마크와 Chevron 대신 Server 아이콘을 기기 정보 진입점으로 사용한다. 아래 메뉴와 동일한 20px 아이콘, 버튼 여백과 크기, 상태 스타일을 사용한다. 기본은 muted 색상이며 기기 정보 선택 시에만 골드와 raised 배경으로 강조한다.
 - 모바일은 상단 COMET 영역 없이 페이지 헤더, 하단 미니 플레이어와 4개 탭을 사용한다. 기기 정보는 Settings 안의 진입 버튼으로 접근한다. 별도 전역 상단바는 추가하지 않는다.
@@ -88,7 +96,7 @@ Charcoal Black / White / Champagne Gold, Floating Panel Layout, 절제된 기하
 - `aria-disabled` 속성만으로 동작 차단을 대신하지 않는다. 별도 요구 전에는 네이티브 버튼을 우선한다.
 - 비인터랙티브한 정보에는 hover·클릭 효과를 넣지 않는다.
 
-## Now Playing 및 공통 플레이어 — 검토용 초안
+## Now Playing 및 공통 플레이어
 
 - 확장 Now Playing은 큰 가상 앨범아트, 곡·아티스트·앨범, 소스와 재생 상태, 소스 포맷을 담당한다. Now Playing에는 출력 장치 영역을 표시하지 않는다. 공통 하단 플레이어는 곡 요약, 재생 조작, 시간·위치를 담당하며 대기열은 확장 화면의 하단에 상시 표시한다.
 - PC와 모바일 모두 재생바에서 독립된 전체 화면 Now Playing 시트를 연다. 시트가 열리면 배경의 탐색 페이지·미니 플레이어·탭은 가려지고 조작할 수 없다. PC도 같은 확장 플레이어를 사용하며 탐색 중의 하단 플레이어는 유지한다.
@@ -107,6 +115,19 @@ Charcoal Black / White / Champagne Gold, Floating Panel Layout, 절제된 기하
 
 - 공통 확장 Now Playing 시트는 화면 가장자리에 기존 gutter만큼 여백을 두고 네 모서리에 panel radius를 적용해 곡률이 드러나게 한다.
 
+## 플레이어 표시와 슬라이더
+
+- 진행률 슬라이더는 3px 트랙과 12px 골드 손잡이로 간결하게 표시한다. 입력 영역은 기본 24px, PC 하단 플레이어에서는 16px로 두며 터치용 모바일 영역은 40px 높이로 유지한다.
+
+- 진행률 양쪽 시간 표시는 동일한 고정 너비와 tabular-nums를 사용한다. 시간 값·메타데이터 유무가 바뀌어도 슬라이더 너비를 유지한다.
+
+- 데스크톱 플레이어는 중앙 조작·슬라이더 영역에 더 넓은 비율을 배분하고 시간 표시 주변 간격을 줄인다. 중앙 영역 비율은 데스크톱에만 적용하며 시간 영역 5ch와 슬라이더 간격 8px은 모바일과 공통으로 사용한다.
+
+- PC 하단 플레이어의 컨트롤 묶음은 임의의 위치 보정 없이 중앙 정렬한다. 버튼과 슬라이더 사이 간격은 8px로 유지한다.
+
+- 모바일 미니 플레이어는 곡 제목 아래에 아티스트를 보조 텍스트로 표시한다. 긴 제목과 아티스트는 말줄임 처리한다.
+
+
 ## 모션 규격
 
 공통 값은 `src/styles/global.css`의 `--motion-*` 변수에서 관리한다. JS의 Web Animations는 `src/utils/motion.ts`를 통해 같은 값을 읽는다. 개별 컴포넌트에 duration·easing을 직접 지정하지 않는다.
@@ -122,19 +143,7 @@ Charcoal Black / White / Champagne Gold, Floating Panel Layout, 절제된 기하
 - prefers-reduced-motion: reduce에서는 상태 전환과 시트 이동 시간을 0으로 한다. 같은 조작과 포커스 동작은 유지한다.
 - 시트 열기 중 닫으면 현재 위치에서 닫고 중복 닫기 요청은 무시한다. 닫기 완료 후 배경으로 포커스를 복귀한다.
 
-- 진행률 슬라이더는 3px 트랙과 12px 골드 손잡이로 간결하게 표시한다. 입력 영역은 기본 24px, PC 하단 플레이어에서는 16px로 두며 터치용 모바일 영역은 40px 높이로 유지한다.
-
-- 진행률 양쪽 시간 표시는 동일한 고정 너비와 tabular-nums를 사용한다. 시간 값·메타데이터 유무가 바뀌어도 슬라이더 너비를 유지한다.
-
-- 데스크톱 플레이어는 중앙 조작·슬라이더 영역에 더 넓은 비율을 배분하고 시간 표시 주변 간격을 줄인다. 중앙 영역 비율은 데스크톱에만 적용하며 시간 영역 5ch와 슬라이더 간격 8px은 모바일과 공통으로 사용한다.
-
-- PC 하단 플레이어의 컨트롤 묶음은 임의의 위치 보정 없이 중앙 정렬한다. 버튼과 슬라이더 사이 간격은 8px로 유지한다.
-
-- 모바일 미니 플레이어는 곡 제목 아래에 아티스트를 보조 텍스트로 표시한다. 긴 제목과 아티스트는 말줄임 처리한다.
-
-- 모바일 하단 탭은 Library · Playlists · Signal Chain · Settings의 4개로 구성한다. Playing 탭은 두지 않고 Empty 상태를 포함해 미니 플레이어에서 Now Playing 시트로 진입한다. 데스크톱에서도 Now Playing은 메뉴 대신 재생바에서 연다.
-
-## 대기열 목업 — 검토용 초안
+## 대기열 목업
 
 - PC·모바일 모두 확장 Now Playing의 아트·정보·컨트롤 아래에 Up next를 항상 표시한다. 현재 곡은 상단에 있으므로 반복하지 않는다.
 - 별도 우측 패널, 대기열 진입·닫기 버튼, 내부 화면 전환 및 열림 상태는 사용하지 않는다. 시트 전체의 스크롤에 자연스럽게 이어진다.
@@ -158,7 +167,7 @@ Charcoal Black / White / Champagne Gold, Floating Panel Layout, 절제된 기하
 
 - 기준값은 `src/styles/global.css`의 Tailwind v4 `@theme static`에 `--breakpoint-desktop` 하나로 정의한다. 일반 Shell과 확장 Now Playing 모두 같은 경계에서 전환한다. PC 내부 크기와 간격은 유동적으로 조절한다.
 - CSS 미디어 쿼리는 `theme(--breakpoint-...)`를 참조하고 Tailwind 반응형 유틸리티는 `desktop:`를 사용한다. Tailwind 기본 breakpoint는 제거해 별도 기준 혼용을 막는다.
-- React에서 필요하면 `src/layout/ViewportProvider.tsx`의 `useViewport()`로 mode, isMobile를 읽는다. Provider는 같은 CSS 토큰을 읽고 matchMedia의 경계 변화만 구독한다. 컴포넌트별 너비 판정이나 resize 구독을 추가하지 않는다.
+- React에서 필요하면 `src/layout/ViewportProvider.tsx`의 `useViewport()`로 mode, isMobile을 읽는다. Provider는 같은 CSS 토큰을 읽고 matchMedia의 경계 변화만 구독한다. 컴포넌트별 너비 판정이나 resize 구독을 추가하지 않는다.
 - 화면 크기에 따른 시각 배치는 CSS가 담당하며 상태를 통해 같은 스타일을 중복 지정하지 않는다. hover·pointer·reduced-motion 조건은 화면 크기와 별도 환경 특성이므로 유지한다.
 
 - 화면 너비에 따른 CSS 분기는 모바일·PC 각 한 블록으로 모아 관리한다. 사이드바 축소 스타일은 사이드바 내부에만 적용하며 모바일 탭·대기열에 전파하지 않는다. 터치 입력 영역은 화면 너비와 독립적으로 유지한다.
