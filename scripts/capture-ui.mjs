@@ -61,7 +61,7 @@ try {
   const board = join(output, 'index.html')
   await writeFile(board, html)
   await writeFile(join(output, 'manifest.json'), JSON.stringify({ capturedAt: timestamp, frames }, null, 2))
-  const page = await browser.newPage({ viewport: { width: 2400, height: 1000 }, deviceScaleFactor: 1 })
+  const page = await browser.newPage({ viewport: { width: 2400, height: 1000 }, deviceScaleFactor: 2 })
   await page.goto(pathToFileURL(board).href)
   await page.evaluate(() => Promise.all([...document.images].map(img => img.decode())))
   await page.screenshot({ path: join(output, 'board.png'), fullPage: true })

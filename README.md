@@ -26,7 +26,7 @@ npm run capture:ui
 ```
 
 PC·모바일의 Library / Now Playing / Empty와 모바일 Up next 스크롤 위치를 합쳐 7개 화면을 자동 캡처한다. 임시 개발 서버와 브라우저는 실행 후 종료한다.
-`artifacts/ui-board/<실행 시각>/`에 통합 `board.png`, 원본 PNG, 클릭해서 원본을 볼 수 있는 `index.html`, 캡처 목록 `manifest.json`을 생성한다. 생성물은 Git에서 제외한다.
+`artifacts/ui-board/<실행 시각>/`에 고해상도(2배) 통합 `board.png`, 원본 PNG, 클릭해서 원본을 볼 수 있는 `index.html`, 캡처 목록 `manifest.json`을 생성한다. 생성물은 Git에서 제외한다.
 
 기존 Chromium을 사용하려면 `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH`에 실행 파일 경로를 지정한다. 캡처 대상·화면 크기는 `scripts/capture-ui.mjs` 상단에서 조정한다. 모션은 생략하고 폰트 로딩 후 캡처하며 Dev tools는 결과물에서 숨긴다. 각 캡처는 현재 보이는 영역을 담으며 모바일 Up next는 별도 스크롤 위치에서 추가 캡처한다.
 
