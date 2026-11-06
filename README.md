@@ -18,6 +18,10 @@ npm run build
 
 작업 전 PRODUCT.md와 DESIGN.md를 확인한다. 실제 서비스 연동은 포함하지 않는다.
 
+## GitHub Pages
+
+`main`에 푸시하면 GitHub Actions가 목업을 빌드해 GitHub Pages에 배포한다. 저장소 Settings → Pages의 Source를 GitHub Actions로 설정한다. 배포 주소는 `https://maquia-1.github.io/comet-frontend/`이며, 실제 기기나 오디오 서비스에 연결되지 않는다.
+
 ## UI 캡처 보드
 
 ```sh
