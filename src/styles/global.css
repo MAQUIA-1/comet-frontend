@@ -120,7 +120,8 @@
 .signal-parameters { display: grid; gap: 16px; max-width: 480px; padding: 8px 0 24px 30px; }
 .signal-parameters label > span { display: flex; justify-content: space-between; gap: 16px; color: var(--color-muted); font-size: 12px; }
 .signal-parameters output { color: var(--color-foreground); font-variant-numeric: tabular-nums; }
-.signal-parameters input { appearance: none; width: 100%; height: 40px; margin: 0; background: linear-gradient(to right, var(--color-accent) var(--seek-position), var(--color-raised) var(--seek-position)) center / 100% 3px no-repeat; cursor: pointer; }
+.range { appearance: none; margin: 0; background: linear-gradient(to right, var(--color-accent) var(--seek-position), var(--color-raised) var(--seek-position)) center / 100% 3px no-repeat; cursor: pointer; }
+.signal-parameters .range { width: 100%; height: 40px; }
 .page-header h1 { font-size: clamp(26px, 3vw, 36px); font-weight: 600; letter-spacing: -.035em; line-height: 1.2; }
 .player { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0,1fr) minmax(260px, 1.8fr) minmax(0,1fr); align-items: center; padding: 12px 20px; gap: 24px; }
 .track-summary { display: flex; align-items: center; gap: 14px; text-align: left; min-width: 0; border-radius: var(--radius-control); }
@@ -185,7 +186,7 @@
 .audio-details { display: flex; flex-wrap: wrap; gap: 24px; margin-top: 40px; }
 .audio-details dt { font-size: 11px; color: var(--color-muted); margin-bottom: 8px; }
 .audio-details dd { font-size: 13px; }
-.progress input { min-width: 0; flex: 1; appearance: none; height: 24px; margin: 0; background: linear-gradient(to right, var(--color-accent) var(--seek-position), var(--color-raised) var(--seek-position)) center / 100% 3px no-repeat; cursor: pointer; }
+.progress input { min-width: 0; flex: 1; height: 24px; }
 .progress input:disabled { cursor: default; opacity: .4; }
 .page-placeholder { justify-content: center; gap: 12px; color: var(--color-muted); font-size: 14px; }
 
@@ -213,10 +214,10 @@
   .app-shell { --motion-duration-feedback: 0ms; --motion-duration-enter: 0ms; --motion-duration-exit: 0ms; }
 }
 
-.progress input::-webkit-slider-runnable-track, .signal-parameters input::-webkit-slider-runnable-track { height: 3px; background: transparent; }
-.progress input::-webkit-slider-thumb, .signal-parameters input::-webkit-slider-thumb { appearance: none; width: 12px; height: 12px; margin-top: -4.5px; border: 0; border-radius: var(--radius-control); background: var(--color-accent); box-shadow: none; }
-.progress input::-moz-range-track, .signal-parameters input::-moz-range-track { height: 3px; background: transparent; }
-.progress input::-moz-range-thumb, .signal-parameters input::-moz-range-thumb { width: 12px; height: 12px; border: 0; border-radius: var(--radius-control); background: var(--color-accent); box-shadow: none; }
+.range::-webkit-slider-runnable-track { height: 3px; background: transparent; }
+.range::-webkit-slider-thumb { appearance: none; width: 12px; height: 12px; margin-top: -4.5px; border: 0; border-radius: var(--radius-control); background: var(--color-accent); box-shadow: none; }
+.range::-moz-range-track { height: 3px; background: transparent; }
+.range::-moz-range-thumb { width: 12px; height: 12px; border: 0; border-radius: var(--radius-control); background: var(--color-accent); box-shadow: none; }
 
 .progress > span {
   flex: 0 0 5ch;

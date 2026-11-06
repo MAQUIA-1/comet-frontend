@@ -1,12 +1,16 @@
 import { useEffect, useRef, useState } from 'react'
 import { ArrowLeft, Play, Music2, Folder, Search, Volume2, X } from 'lucide-react'
 import { useMessages } from '../i18n'
-import { Artwork } from '../components/Playback'
+import { Artwork } from '../components/Artwork'
 import { albums, tracks } from '../mocks/library'
 import { formatTime } from '../mocks/playback'
 import type { MockPlayback } from '../mocks/playback'
 
 type View = 'albums' | 'artists' | 'tracks' | 'folders'
+
+function AlbumGrid({ items, showYear, onSelect }: { items: ReadonlyArray<(typeof albums)[number]>; showYear?: boolean; onSelect: (id: string) => void }) {
+  return <div className="album-grid">{items.map(item => <button key={item.id} className="album-item" onClick={() => onSelect(item.id)}><Artwork art={item.art} large /><strong>{item.title}</strong><span>{showYear ? item.year : item.artist}</span></button>)}</div>
+}
 export function LibraryPage({ playback }: { playback: MockPlayback }) {
   const { library: t } = useMessages()
   const [searchOpen, setSearchOpen] = useState(false)
@@ -26,6 +30,7 @@ export function LibraryPage({ playback }: { playback: MockPlayback }) {
   const albumTracks = album ? tracks.map((track, index) => ({ ...track, index })).filter(track => track.albumId === album.id) : []
   const changeView = (next: View) => { setView(next); setAlbumId(null); setArtist(null); setFolderArtist(null); setFolderAlbum(null); setQuery('') }
   const back = () => { if (albumId) setAlbumId(null); else setArtist(null); setQuery('') }
+  const selectAlbum = (id: string) => { setAlbumId(id); setQuery('') }
   const rows = (items: Array<typeof tracks[number] & { index: number }>, showAlbum = false) => <div className="library-tracks">
     {items.length === 0 && <p className="library-empty">{t.noResults}</p>}
     {items.map((track, number) => <button key={track.index} className="library-track" onClick={() => playback.playTrack(track.index)} aria-current={playback.scenario === 'local' && playback.track && playback.index === track.index ? 'true' : undefined} aria-label={`${t.playTrack} ${track.title} — ${track.artist}`}>
@@ -54,7 +59,7 @@ export function LibraryPage({ playback }: { playback: MockPlayback }) {
       <button className="library-back" onClick={back}><ArrowLeft size={17} />{artist ? `${t.backTo} ${artist}` : t.back}</button>
       <div className="album-hero"><Artwork art={album.art} large /><div><p className="library-kicker">{t.album} · {album.year}</p><h2>{album.title}</h2><p>{album.artist} · {albumTracks.length} {t.songs}</p><button className="library-play" onClick={() => playback.playTrack(albumTracks[0].index)}><Play size={16} fill="currentColor" />{t.playAlbum}</button></div></div>
       {rows(albumTracks.filter(track => match(track.title, track.artist, track.album)))}
-    </section> : artist ? <section><button className="library-back" onClick={back}><ArrowLeft size={17} />{t.backArtists}</button><h2 className="library-section-title">{artist}</h2><div className="album-grid">{albums.filter(item => item.artist === artist && match(item.title, item.artist)).map(item => <button key={item.id} className="album-item" onClick={() => { setAlbumId(item.id); setQuery('') }}><Artwork art={item.art} large /><strong>{item.title}</strong><span>{item.year}</span></button>)}</div></section> : view === 'albums' ? <section><div className="album-grid">{albums.filter(item => match(item.title, item.artist)).map(item => <button key={item.id} className="album-item" onClick={() => { setAlbumId(item.id); setQuery('') }}><Artwork art={item.art} large /><strong>{item.title}</strong><span>{item.artist}</span></button>)}</div></section> : view === 'artists' ? <section><div className="artist-list">{artists.filter(name => match(name)).map(name => <button key={name} className="artist-item" onClick={() => { setArtist(name); setQuery('') }}><span className="artist-avatar"><Music2 size={22} /></span><span><strong>{name}</strong><small>{albums.filter(item => item.artist === name).length} {t.albums}</small></span><ArrowLeft className="artist-arrow" size={18} /></button>)}</div></section> : view === 'tracks' ? <section>{rows(tracks.map((track, index) => ({ ...track, index })).filter(track => match(track.title, track.artist, track.album)), true)}</section> : <section>
+    </section> : artist ? <section><button className="library-back" onClick={back}><ArrowLeft size={17} />{t.backArtists}</button><h2 className="library-section-title">{artist}</h2><AlbumGrid items={albums.filter(item => item.artist === artist && match(item.title, item.artist))} showYear onSelect={selectAlbum} /></section> : view === 'albums' ? <section><AlbumGrid items={albums.filter(item => match(item.title, item.artist))} onSelect={selectAlbum} /></section> : view === 'artists' ? <section><div className="artist-list">{artists.filter(name => match(name)).map(name => <button key={name} className="artist-item" onClick={() => { setArtist(name); setQuery('') }}><span className="artist-avatar"><Music2 size={22} /></span><span><strong>{name}</strong><small>{albums.filter(item => item.artist === name).length} {t.albums}</small></span><ArrowLeft className="artist-arrow" size={18} /></button>)}</div></section> : view === 'tracks' ? <section>{rows(tracks.map((track, index) => ({ ...track, index })).filter(track => match(track.title, track.artist, track.album)), true)}</section> : <section>
       {(folderArtist || folderAlbum) && <button className="library-back" onClick={() => { if (folderAlbum) setFolderAlbum(null); else setFolderArtist(null); setQuery('') }}><ArrowLeft size={17} />{folderAlbum ? `${t.backTo} ${folderArtist}` : t.folderBack}</button>}
       <p className="folder-path">{[t.folderRoot, folderArtist, folderAlbum && albums.find(item => item.id === folderAlbum)?.title].filter(Boolean).join(' / ')}</p>
       {folderAlbum ? rows(tracks.map((track, index) => ({ ...track, index })).filter(track => track.albumId === folderAlbum && match(track.title, track.artist, track.album))) : <div className="folder-list">

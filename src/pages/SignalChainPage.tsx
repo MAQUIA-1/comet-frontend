@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import type { CSSProperties } from 'react'
+import { Range, Switch } from '../components/Controls'
 import { ArrowDown, ArrowUp, ChevronDown, Plus, Trash2 } from 'lucide-react'
 import { useMessages } from '../i18n'
 import type { ModuleKind, SignalChainState } from '../mocks/signalChain'
@@ -22,7 +22,7 @@ export function SignalChainPage({ chain }: { chain: SignalChainState }) {
   return <div className="signal-page">
     <div className="signal-overview">
       <h2 className={active ? 'is-processed' : undefined}>{active ? t.processed : t.direct}</h2>
-      <button className="signal-processing" role="switch" aria-label={t.processing} aria-checked={processingOn} onClick={() => chain.setBypassed(!chain.bypassed)}><span className="signal-switch" aria-hidden="true"><span /></span></button>
+      <Switch className="signal-processing" label={t.processing} checked={processingOn} onChange={checked => chain.setBypassed(!checked)} />
     </div>
     <div className="signal-heading"><div className="signal-add-wrap" onKeyDown={event => { if (event.key === 'Escape') { setAdding(false); event.currentTarget.querySelector('button')?.focus() } }} onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setAdding(false) }}><button className="signal-add" aria-expanded={adding} onClick={() => setAdding(!adding)}><Plus size={16} />{t.addModule}<ChevronDown size={16} /></button>
       {adding && <div className="signal-add-menu">{(['gain', 'eq', 'crossfeed'] as const).map(kind => <button key={kind} onClick={() => { chain.add(kind); setAdding(false) }}>{names[kind]}</button>)}</div>}</div></div>
@@ -34,11 +34,11 @@ export function SignalChainPage({ chain }: { chain: SignalChainState }) {
           <div className="signal-actions">
             <button className="icon-button" aria-label={`${t.moveUp} ${names[module.kind]}`} disabled={index === 0} onClick={() => chain.move(module.id, -1)}><ArrowUp size={17} /></button>
             <button className="icon-button" aria-label={`${t.moveDown} ${names[module.kind]}`} disabled={index === chain.modules.length - 1} onClick={() => chain.move(module.id, 1)}><ArrowDown size={17} /></button>
-            <button className="signal-module-toggle" role="switch" aria-label={`${t.enable} ${names[module.kind]}`} aria-checked={module.enabled} onClick={() => chain.toggle(module.id)}><span className="signal-switch" aria-hidden="true"><span /></span></button>
+            <Switch className="signal-module-toggle" label={`${t.enable} ${names[module.kind]}`} checked={module.enabled} onChange={() => chain.toggle(module.id)} />
             <button className="icon-button" aria-label={`${t.remove} ${names[module.kind]}`} onClick={() => chain.remove(module.id)}><Trash2 size={17} /></button>
           </div>
         </div>
-        {chain.selected === module.id && <div className="signal-parameters">{parameters[module.kind].map(parameter => <label key={parameter.key}><span>{parameterNames[parameter.key]}<output>{module.values[parameter.key]} {parameter.unit}</output></span><input type="range" min={parameter.min} max={parameter.max} step={parameter.step} value={module.values[parameter.key]} style={{ '--seek-position': `${(module.values[parameter.key] - parameter.min) / (parameter.max - parameter.min) * 100}%` } as CSSProperties} onChange={event => chain.update(module.id, parameter.key, Number(event.target.value))} /></label>)}</div>}
+        {chain.selected === module.id && <div className="signal-parameters">{parameters[module.kind].map(parameter => <label key={parameter.key}><span>{parameterNames[parameter.key]}<output>{module.values[parameter.key]} {parameter.unit}</output></span><Range min={parameter.min} max={parameter.max} step={parameter.step} value={module.values[parameter.key]} onChange={value => chain.update(module.id, parameter.key, value)} /></label>)}</div>}
       </div>)}
     </div>
   </div>

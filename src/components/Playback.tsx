@@ -1,13 +1,11 @@
 import { Queue } from './Queue'
-import type { CSSProperties } from 'react'
-import { Music2, Play, Pause, SkipBack, SkipForward } from 'lucide-react'
+import { Artwork } from './Artwork'
+import { Range } from './Controls'
+import { Play, Pause, SkipBack, SkipForward } from 'lucide-react'
 import { useMessages } from '../i18n'
 import { formatTime, tracks } from '../mocks/playback'
 import type { MockPlayback } from '../mocks/playback'
 
-export function Artwork({ art, large = false }: { art?: string; large?: boolean }) {
-  return <span className={`album-art ${large ? 'album-art-large' : ''} ${art ?? 'no-art'}`} aria-hidden="true">{art ? <span className="art-orbit" /> : <Music2 size={large ? 64 : 20} />}</span>
-}
 export function Controls({ state }: { state: MockPlayback }) {
   const { player: t } = useMessages()
   return <div className="transport-buttons">
@@ -18,7 +16,7 @@ export function Controls({ state }: { state: MockPlayback }) {
 }
 function Seek({ state }: { state: MockPlayback }) {
   const { player: t } = useMessages()
-  return <div className="progress"><span>{formatTime(state.position)}</span><input aria-label={t.seek} type="range" style={{ '--seek-position': `${state.track ? state.position / state.track.duration * 100 : 0}%` } as CSSProperties} min={0} max={state.track?.duration ?? 0} value={state.position} disabled={!state.canSeek || !state.track} onChange={event => state.setPosition(Number(event.target.value))} /><span>{state.track ? formatTime(state.track.duration) : '—:—'}</span></div>
+  return <div className="progress"><span>{formatTime(state.position)}</span><Range aria-label={t.seek} min={0} max={state.track?.duration ?? 0} value={state.position} disabled={!state.canSeek || !state.track} onChange={state.setPosition} /><span>{state.track ? formatTime(state.track.duration) : '—:—'}</span></div>
 }
 export function Player({ state, onOpen }: { state: MockPlayback; onOpen: () => void }) {
   const { player: t, playback: m } = useMessages()
