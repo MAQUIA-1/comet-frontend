@@ -192,7 +192,7 @@ Charcoal Black / White / Champagne Gold, Floating Panel Layout, 절제된 기하
 ## Signal Chain 목업
 
 - 초기 경로는 Direct / No processing이며 전체 Processing 스위치는 꺼져 있다. Gain·Parametric EQ·Crossfeed 예시 모듈을 순서대로 추가하고 선택해 파라미터를 조절한다. 전체 스위치와 개별 활성화 스위치는 독립적으로 조작하며, 전체 스위치를 끄면 모듈 상태를 유지한 채 전체 Bypass가 적용된다. 모듈이 없어도 전체 스위치를 조작할 수 있고 추가·삭제는 스위치 상태를 바꾸지 않는다.
-- Processing이 켜져 있고 활성 모듈이 하나 이상이면 골드 Processed, 그 외에는 Direct를 부제 없이 표시한다. 이 표시는 UI 상태이며 실제 처리나 Bit-perfect 검증을 의미하지 않는다. 모듈·파라미터 값은 엔진 사양이 아닌 예시다.
+- 모듈의 개수·활성 상태와 관계없이 전체 Processing 스위치가 켜지면 골드 Processing, 꺼지면 Direct를 표시하고, 아래에 각각 Uses enabled modules 또는 Bypasses all modules를 짧게 표시한다. 이 표시는 마스터 스위치의 목업 상태이며 실제 신호 처리나 Bit-perfect 검증을 의미하지 않는다. 모듈·파라미터 값은 엔진 사양이 아닌 예시다.
 - 체인은 본문 스크롤을 사용하고, 선택한 모듈의 파라미터를 목록에서 펼친다. 탐색 페이지를 바꾸어도 임시 상태를 유지하며 새로고침 후에는 초기화된다.
 - 페이지 제목 아래에는 경로 상태와 전체 Processing 스위치, 모듈 추가와 목록을 배치한다. 경로 설명이나 중간 제목을 반복하지 않는다.
 - 전체·개별 스위치는 중립적인 트랙과 활성 골드 손잡이를 사용하며 접근성 이름을 제공한다. 파라미터 슬라이더는 공통 플레이어의 골드 트랙·손잡이 표현을 재사용한다.

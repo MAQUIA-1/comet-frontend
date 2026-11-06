@@ -14,14 +14,13 @@ const parameters: Record<ModuleKind, { key: ParameterKey; min: number; max: numb
 export function SignalChainPage({ chain }: { chain: SignalChainState }) {
   const { signal: t } = useMessages()
   const [adding, setAdding] = useState(false)
-  const active = !chain.bypassed && chain.modules.some(item => item.enabled)
   const processingOn = !chain.bypassed
   const names = { gain: t.gain, eq: t.eq, crossfeed: t.crossfeed }
   const parameterNames = { gain: t.gain, frequency: t.frequency, q: t.q, amount: t.amount }
 
   return <div className="signal-page">
     <div className="signal-overview">
-      <h2 className={active ? 'is-processed' : undefined}>{active ? t.processed : t.direct}</h2>
+      <div><h2 className={processingOn ? 'is-processed' : undefined}>{processingOn ? t.processed : t.direct}</h2><p>{processingOn ? t.processedDescription : t.directDescription}</p></div>
       <Switch className="signal-processing" label={t.processing} checked={processingOn} onChange={checked => chain.setBypassed(!checked)} />
     </div>
     <div className="signal-heading"><div className="signal-add-wrap" onKeyDown={event => { if (event.key === 'Escape') { setAdding(false); event.currentTarget.querySelector('button')?.focus() } }} onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setAdding(false) }}><button className="signal-add" aria-expanded={adding} onClick={() => setAdding(!adding)}><Plus size={16} />{t.addModule}<ChevronDown size={16} /></button>

@@ -91,10 +91,13 @@
 .signal-overview { display: flex; align-items: start; justify-content: space-between; gap: 20px; padding: 8px 0 32px; }
 .signal-overview h2 { font-size: 26px; font-weight: 600; }
 .signal-overview h2.is-processed { color: var(--color-accent); }
+.signal-overview p { margin-top: 4px; color: var(--color-muted); font-size: 13px; }
 .signal-add { display: inline-flex; align-items: center; gap: 8px; padding: 10px 12px; border-radius: var(--radius-control); background: var(--color-raised); font-size: 13px; white-space: nowrap; }
-.signal-processing { display: inline-flex; align-items: center; justify-content: center; min-width: 48px; min-height: 40px; border-radius: var(--radius-control); flex-shrink: 0; }
+.signal-processing { display: inline-flex; align-items: center; justify-content: center; min-width: 52px; min-height: 44px; border-radius: var(--radius-control); flex-shrink: 0; }
 .signal-switch { display: flex; align-items: center; width: 32px; height: 18px; padding: 3px; border-radius: var(--radius-control); background: var(--color-raised); flex-shrink: 0; }
 .signal-switch > span { width: 12px; height: 12px; border-radius: var(--radius-control); background: var(--color-muted); }
+.signal-processing .signal-switch { width: 40px; height: 22px; border-radius: var(--radius-panel); }
+.signal-processing .signal-switch > span { width: 16px; height: 16px; }
 [aria-checked="true"] > .signal-switch { justify-content: flex-end; }
 [aria-checked="true"] > .signal-switch > span { background: var(--color-accent); }
 .signal-module-toggle { display: inline-flex; align-items: center; justify-content: center; min-width: 52px; min-height: 40px; border-radius: var(--radius-control); }

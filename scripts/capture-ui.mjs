@@ -19,6 +19,7 @@ const scenarios = [
   { name: 'Device Information', expanded: false, empty: false, device: true },
   { name: 'Device Information / System', expanded: false, empty: false, device: true, mobileOnly: true, scrollToSystem: true },
   { name: 'Signal Chain / Direct', expanded: false, empty: false, chain: 'direct' },
+  { name: 'Signal Chain / Processing', expanded: false, empty: false, chain: 'processing' },
   { name: 'Signal Chain / Modules', expanded: false, empty: false, chain: 'modules' },
   { name: 'Signal Chain / Parameters', expanded: false, empty: false, chain: 'modules', mobileOnly: true, scrollToParameters: true },
   { name: 'Now Playing', expanded: true, empty: false },
@@ -57,6 +58,7 @@ try {
       }
       if (scenario.chain) {
         await page.getByRole('button', { name: 'Signal Chain', exact: true }).click()
+        if (scenario.chain === 'processing') await page.getByRole('switch', { name: 'Processing', exact: true }).click()
         if (scenario.chain === 'modules') {
           await page.getByRole('button', { name: 'Add module' }).click()
           await page.getByRole('button', { name: 'Gain', exact: true }).click()
